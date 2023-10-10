@@ -1,4 +1,4 @@
-# cka-kubernetes
+# cka-kubernetes 🚀
 
 - This project is free software: you can redistribute it and/or modify if necessary.
 - The main idea is to create this repository with the idea that you can study for the certificate CKA.
