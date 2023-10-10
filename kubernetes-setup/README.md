@@ -1,6 +1,6 @@
 # Create a kubernetes infrastructure. 🚀
 
-Example Code to create a Kubernetes cluster with the puorpouse of Exams and deploys for PoC.
+Example Code to create a Kubernetes cluster with the purpose of Exams and deploys for PoC.
 
 * [ ] Create control plane.
 * [ ] Create two nodes.
