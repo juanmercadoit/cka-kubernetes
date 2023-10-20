@@ -1,0 +1,71 @@
+# ============================================================================================
+# 
+# Activities to do:
+# 
+# Create a controlplane node by using vagrant.
+# Create a two workers nodes by using vagrant.
+# 
+# ============================================================================================
+
+# Variables for the cluster.
+# Images
+IMAGE_NAME = "bento/ubuntu-20.04"
+ENV['VAGRANT_NO_PARALLEL'] = 'yes'
+# Networking
+IP_CONTROL_PLANE=192.168.60.11
+VBOX_NET_DEVICE_TYPE="private_network"
+VBOX_NET_DEVICE=vboxnet4
+KUBE_CLUSTER_DOMAIN="kubernetes.cluster"
+# Resources 
+MEMORY_CONTROL_PLANE=2048
+VCPU_CONTROL_PLANE=2
+VCPU_WORKERS=2
+MEMORY_WORKERS=4096
+# Provision
+CLUSTER_NAME = "controlplane"
+NODES_NAME = "worker"
+PROVISION_TYPE = "shell"
+
+# The "2" in the first line above represents the version of the configuration object config that will be used for configuration for that block (the section between the do and the end).
+# This object can be very different from version to version.
+
+Vagrant.configure("2") do |config|
+  (1..1).each do |i|
+    config.vm.define "#{CLUSTER_NAME}-0#{i}" do |node|
+      node.vm.box               = IMAGE_NAME
+      node.vm.box_check_update  = false
+      node.vm.hostname          = "#{CLUSTER_NAME}-0#{i}.#{KUBE_CLUSTER_DOMAIN}"
+      node.vm.network "#{VBOX_NET_DEVICE_TYPE}", ip: "#{IP_CONTROL_PLANE}", name: "#{VBOX_NET_DEVICE}"
+      node.vm.provider :virtualbox do |v|
+        v.name    = "#{CLUSTER_NAME}-0#{i}"
+        v.memory  = MEMORY_CONTROL_PLANE
+        v.cpus    = VCPU_CONTROL_PLANE
+      end
+      node.vm.provider :libvirt do |v|
+        v.memory  = MEMORY_CONTROL_PLANE
+        v.nested  = true
+        v.cpus    = VCPU_CONTROL_PLANE
+      end
+      node.vm.provision "#{PROVISION_TYPE}", path: "01-bootstrap.sh", args: "#{CLUSTER_NAME}"
+    end
+  end
+  (1..2).each do |i|
+    config.vm.define "#{NODES_NAME}-0#{i}" do |node|
+      node.vm.box               = IMAGE_NAME
+      node.vm.box_check_update  = false
+      node.vm.hostname          = "#{NODES_NAME}-0#{i}.#{KUBE_CLUSTER_DOMAIN}"
+      node.vm.network "#{VBOX_NET_DEVICE_TYPE}", ip: "192.168.60.2#{i}"
+        node.vm.provider :virtualbox do |v|
+          v.name    = "#{NODES_NAME}-0#{i}"
+          v.memory  = MEMORY_WORKERS
+          v.cpus    = VCPU_WORKERS
+        end
+        node.vm.provider :libvirt do |v|
+          v.memory  = MEMORY_WORKERS
+          v.nested  = true
+          v.cpus    = VCPU_WORKERS
+        node.vm.provision "#{PROVISION_TYPE}", path: "01-bootstrap.sh", args: "#{NODES_NAME}"
+        end
+    end
+  end
+end
