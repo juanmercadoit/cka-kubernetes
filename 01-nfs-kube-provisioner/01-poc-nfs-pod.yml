@@ -1,0 +1,22 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: poc-nfs-pod
+  namespace: nfs-provisioning
+spec:
+  containers:
+  - name: poc-nfs-pod
+    image: busybox:latest
+    command:
+      - "/bin/sh"
+    args:
+      - "-c"
+      - "touch /mnt/POC-NFS-SUCCESS && sleep 600"
+    volumeMounts:
+      - name: nfs-pvc
+        mountPath: "/mnt"
+  restartPolicy: "Never"
+  volumes:
+    - name: nfs-pvc
+      persistentVolumeClaim:
+        claimName: poc-nfs-claim #demo-claim
