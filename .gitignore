@@ -6,3 +6,4 @@
 lib/.precomp
 
 charts/**/charts
+.vagrant
