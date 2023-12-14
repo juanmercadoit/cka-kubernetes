@@ -5,14 +5,14 @@ metadata:
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  project: default
+  project: rootapps-project
   source:
     repoURL: https://github.com/juanmercadoit/cka-kubernetes.git
     path: charts/root-app/
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: infra-apps
   syncPolicy:
     automated:
       selfHeal: true
