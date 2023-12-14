@@ -1,0 +1,31 @@
+global:
+  env:
+  - name: NO_PROXY
+    value: localhost,127.0.0.1,0.0.0.0,10.43.0.0/16,10.42.0.0/16,192.168.0.0/16,192.168.1.0/16,patagonlad.com,argocd-repo-server,argocd-application-controller,argocd-metrics,argocd-server,argocd-server-metrics,argocd-redis
+
+redis:
+  image:
+    repository: redis
+
+
+configs:
+  params:
+    server.insecure: true
+
+  cm:
+    accounts.andres: apiKey, login
+
+  rbac:
+    policy.csv: |
+      p, role:org-admin, applications, *, */*, allow
+      p, role:org-admin, clusters, get, *, allow
+      p, role:org-admin, repositories, *, *, allow
+      p, role:org-admin, logs, get, *, allow
+      p, role:org-admin, exec, create, */*, allow
+      g, andres, role:org-admin
+
+server:
+  ingress: 
+    enabled: true
+    hosts:
+      - argocd.patagonlad.com
