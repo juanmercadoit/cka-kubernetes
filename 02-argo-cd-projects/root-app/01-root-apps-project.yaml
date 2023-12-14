@@ -15,3 +15,11 @@ spec:
   destinations:
   - namespace: apps-infra
     server: https://kubernetes.default.svc
+  - namespace: guestbook-dev
+    server: https://kubernetes.default.svc
+  - namespace: guestbook-prod
+    server: https://kubernetes.default.svc
+  - namespace: guestbook
+    server: https://kubernetes.default.svc
+  - namespace: default
+    server: https://kubernetes.deafult.svc
