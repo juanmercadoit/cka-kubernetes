@@ -8,7 +8,7 @@ spec:
   project: infra-kube
   source:
     repoURL: https://github.com/juanmercadoit/cka-kubernetes.git
-    path: charts/root-app/
+    path: charts/root-infra-kube
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
