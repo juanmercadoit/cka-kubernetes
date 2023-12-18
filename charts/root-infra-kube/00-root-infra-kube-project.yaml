@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: infra-kube
+  namespace: argocd
+spec:
+  description: "infra for kubernetes"
+  sourceRepos:
+    - '*'
+  destinations:
+    - namespace: 'argocd'
+      server: https://kubernetes.default.svc
+    - namespace: 'monitoring-ns'
+      server: https://kubernetes.default.svc
+    - namespace: 'infra-kube-ns'
+      server: https://kubernetes.default.svc
+    - namespace: 'backup-ns'
+      server: https://kubernetes.default.svc
