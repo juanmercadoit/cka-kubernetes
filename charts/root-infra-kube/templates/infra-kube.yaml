@@ -1,18 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: root-app
+  name: infra-kube
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
-  project: rootapps-project
+  project: infra-kube
   source:
     repoURL: https://github.com/juanmercadoit/cka-kubernetes.git
     path: charts/root-app/
     targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: infra-kube-ns
   syncPolicy:
     automated:
       selfHeal: true
