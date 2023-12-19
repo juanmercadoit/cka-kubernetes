@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app.kubernetes.io/component: server
+    app.kubernetes.io/instance: prometheus-dev
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/part-of: prometheus
+    app.kubernetes.io/version: v2.47.0
+    argocd.argoproj.io/instance: prometheus-dev
+    helm.sh/chart: prometheus-25.3.1
+  name: prometheus-dev-server
+  namespace: monitoring-ns
+spec:
+  storageClassName: nfs-client
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 8Gi
