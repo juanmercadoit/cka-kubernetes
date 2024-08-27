@@ -1,4 +1,4 @@
-# Containers
+# Containers :rocket:
 
 Estos conceptos son fundamentales para entender cómo se ejecutan y gestionan las aplicaciones en entornos de contenedores, permitiendo una mayor flexibilidad, portabilidad y eficiencia en el desarrollo y despliegue de software.
 
